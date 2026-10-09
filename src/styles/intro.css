@@ -1,0 +1,101 @@
+/* ---------- intro ---------- */
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: #03050f;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  transition:
+    opacity 0.8s,
+    visibility 0.8s;
+}
+#intro.gone {
+  opacity: 0;
+  visibility: hidden;
+}
+#intro .flash {
+  position: absolute;
+  inset: 0;
+  background: #dfe9ff;
+  opacity: 0;
+  animation: flash 2.6s 0.2s;
+}
+#intro svg {
+  width: min(760px, 92vw);
+  overflow: visible;
+}
+#intro .word {
+  font-family: var(--display);
+  font-size: 150px;
+  fill: transparent;
+  stroke: var(--haldi);
+  stroke-width: 2;
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+  animation:
+    draw 1.8s 0.5s forwards,
+    fillin 0.8s 1.9s forwards;
+}
+#intro .sub {
+  font-family: var(--mono);
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-size: 13px;
+  opacity: 0;
+  animation: up 0.8s 1.6s forwards;
+}
+#intro .skip {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.1em;
+  background: none;
+  border: 1px solid var(--line);
+  padding: 8px 14px;
+  border-radius: 30px;
+}
+@keyframes flash {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  4% {
+    opacity: 0.9;
+  }
+  7% {
+    opacity: 0.1;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  16% {
+    opacity: 0;
+  }
+}
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes fillin {
+  to {
+    fill: var(--haldi);
+    filter: drop-shadow(0 0 30px rgba(255, 197, 61, 0.6));
+  }
+}
+@keyframes up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,28 @@
+/* Layout: a monsoon night over India — cinematic sky hero with Megh and the dancing peacock, a glass pillar rail,
+   four ledger chapters (I–IV) each fronted by a cartoon narrator, a rain-gauge scroll meter on the right.
+   Single committed dark look: night indigo, rain teal, haldi gold, sindoor red, peacock green. */
+:root {
+  --bg: #060a1c;
+  --bg2: #0d1636;
+  --glass: rgba(20, 30, 72, 0.58);
+  --glass2: rgba(30, 44, 100, 0.5);
+  --line: rgba(140, 170, 255, 0.18);
+  --fg: #f3efe2;
+  --muted: #a3acd9;
+  --haldi: #ffc53d;
+  --haldi-ink: #1d1300;
+  --rain: #46d4e0;
+  --sindoor: #ff5a3c;
+  --mor: #19c39b;
+  --neel: #4f8cff;
+  --le: #4f8cff;
+  --e: #46d4e0;
+  --n: #3ddc97;
+  --d: #ffa53d;
+  --ld: #ff4b3a;
+  --display: 'Rozha One', 'Tiro Devanagari Hindi', Georgia, serif;
+  --body: 'Mukta', 'Noto Sans Devanagari', system-ui, sans-serif;
+  --mono: 'Spline Sans Mono', ui-monospace, Menlo, monospace;
+  --toon: 'Baloo 2', 'Mukta', system-ui, sans-serif;
+  color-scheme: dark;
+}

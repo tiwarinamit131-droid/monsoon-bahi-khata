@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Monsoon Bahi-Khata</title>
+    <meta
+      name="description"
+      content="A cinematic, fully client-side analytics engine for India's monsoon: what fell, why, what the harvest will be, and where relief money should go."
+    />
+    <meta name="theme-color" content="#060a1c" />
+    <meta name="color-scheme" content="dark" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Monsoon Bahi-Khata" />
+    <meta
+      property="og:description"
+      content="India's monsoon, kept like a trader's ledger. Descriptive, diagnostic, predictive and prescriptive analytics in one page."
+    />
+    <meta property="og:image" content="https://YOUR_GITHUB_USERNAME.github.io/monsoon-bahi-khata/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icons/icon-192.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to the dashboard</a>
+    <div id="live" class="sr-only" aria-live="polite"></div>
+    <div id="intro" aria-hidden="true">
+      <div class="flash"></div>
+      <div>
+        <svg viewBox="0 0 760 200"><text class="word" x="380" y="160" text-anchor="middle">मानसून</text></svg>
+        <div class="sub">Monsoon Bahi-Khata · Kharif 2026</div>
+      </div>
+      <button class="skip" id="skipIntro" type="button">Skip intro</button>
+    </div>
+
+    <canvas id="fx" aria-hidden="true"></canvas>
+    <div class="cur-ring" id="curRing" aria-hidden="true"></div>
+    <div class="cur-dot" id="curDot" aria-hidden="true"></div>
+    <div class="gauge" aria-hidden="true"><i id="gaugeFill"></i></div>
+    <div class="gauge-lab mono" id="gaugeLab" aria-hidden="true">0 mm</div>
+
+    <div class="ticker" aria-label="State rainfall departures">
+      <div class="ticker-track" id="ticker"></div>
+    </div>
+
+    <header class="hero">
+      <canvas id="sky" aria-hidden="true"></canvas>
+      <div class="devbar">
+        <button class="chipbtn" id="openPalette" type="button" title="Open the command palette">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M10 18a8 8 0 1 1 5.3-14A8 8 0 0 1 10 18Zm11 3-5.6-5.6"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.4"
+              stroke-linecap="round"
+            /></svg
+          >Search <kbd>Ctrl</kbd><kbd>K</kbd>
+        </button>
+        <a
+          class="chipbtn"
+          href="https://github.com/YOUR_GITHUB_USERNAME/monsoon-bahi-khata"
+          target="_blank"
+          rel="noopener"
+          ><svg viewBox="0 0 16 16" aria-hidden="true">
+            <path
+              d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"
+            /></svg
+          >Source</a
+        >
+      </div>
+      <div class="wrap hero-in">
+        <div>
+          <span class="kicker"><i></i>Kharif 2026 · season closed 30 Sep · synthetic data</span>
+          <div class="deva-big">मानसून बही‑खाता</div>
+          <h1>Monsoon Bahi-Khata</h1>
+          <p class="tag">
+            India's rain, kept like a trader's ledger. Four questions, one season: what fell, why it fell that
+            way, what the fields will yield, and where the relief rupee should go.
+          </p>
+          <div class="hstats">
+            <div class="hstat"><b id="hsLpa">0%</b><span>All-India of LPA</span></div>
+            <div class="hstat"><b id="hsShort">0</b><span>States in deficit</span></div>
+            <div class="hstat"><b id="hsArea">0</b><span>Lakh ha sown</span></div>
+          </div>
+          <div class="ctas">
+            <a class="btn primary" href="#descriptive">Open the ledger ↓</a>
+            <button class="btn" id="sound" type="button" aria-pressed="false">
+              <span class="eq"><i></i><i></i><i></i></span><span id="soundLab">Play rain sound</span>
+            </button>
+          </div>
+          <p class="hint">
+            Press <kbd>?</kbd> for shortcuts · <kbd>D</kbd> for the dev HUD · try the Konami code
+          </p>
+        </div>
+        <div class="stage">
+          <div class="bubble" id="heroBubble"></div>
+          <div class="megh-wrap" id="heroMegh"></div>
+          <div class="mor-wrap" id="heroMor"></div>
+        </div>
+      </div>
+      <div class="waves" aria-hidden="true">
+        <svg class="wave w1" viewBox="0 0 1440 110" preserveAspectRatio="none">
+          <path
+            d="M0 60 Q90 30 180 60 T360 60 T540 60 T720 60 T900 60 T1080 60 T1260 60 T1440 60 V110 H0Z"
+            fill="#1b5f8a"
+          />
+        </svg>
+        <svg class="wave w2" viewBox="0 0 1440 110" preserveAspectRatio="none">
+          <path d="M0 78 Q120 54 240 78 T480 78 T720 78 T960 78 T1200 78 T1440 78 V110 H0Z" fill="#0f3a62" />
+        </svg>
+        <div id="boats"></div>
+      </div>
+    </header>
+
+    <nav class="rail" aria-label="Pillars">
+      <div class="wrap rail-in">
+        <a href="#descriptive" data-p="descriptive" class="on"
+          ><i>I</i>Descriptive<span class="hi">वर्णनात्मक</span></a
+        >
+        <a href="#diagnostic" data-p="diagnostic"><i>II</i>Diagnostic<span class="hi">निदानात्मक</span></a>
+        <a href="#predictive" data-p="predictive"><i>III</i>Predictive<span class="hi">पूर्वानुमान</span></a>
+        <a href="#prescriptive" data-p="prescriptive"
+          ><i>IV</i>Prescriptive<span class="hi">निर्देशात्मक</span></a
+        >
+        <label class="pick" for="state"
+          >State under review
+          <select id="state"></select
+        ></label>
+      </div>
+    </nav>
+
+    <main class="wrap" id="main">
+      <section id="descriptive" class="pillar">
+        <div class="ph">
+          <span class="num">I</span>
+          <div>
+            <h2>Descriptive</h2>
+            <p class="q">What happened? · क्या हुआ?</p>
+          </div>
+          <div class="narr">
+            <div class="toonbox" id="toonD"></div>
+            <div class="bubble" id="bubD"></div>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <p class="lede rv" id="ledeD"></p>
+        <div class="kpis rv" id="kpis"></div>
+        <div class="spread">
+          <div class="panel tilt rv">
+            <div class="ptitle">Rain map <span>tap a state to review it</span></div>
+            <div id="tilemap"></div>
+            <div class="legend" id="legend"></div>
+          </div>
+          <div class="panel tilt rv">
+            <div class="ptitle">Week by week <span>actual vs normal, mm</span></div>
+            <div class="chartbox">
+              <canvas id="weekly" aria-label="Weekly rainfall chart" role="img"></canvas>
+            </div>
+          </div>
+        </div>
+        <div class="panel rv">
+          <div class="ptitle">
+            The ledger <span>26 states and groupings · click a heading to sort, a row to review</span>
+          </div>
+          <div class="tablewrap">
+            <table id="ledger">
+              <thead>
+                <tr>
+                  <th><button data-k="name">State</button></th>
+                  <th><button data-k="reg">Region</button></th>
+                  <th class="r"><button data-k="normal">Normal mm</button></th>
+                  <th class="r"><button data-k="actual">Actual mm</button></th>
+                  <th class="r"><button data-k="dep">Departure</button></th>
+                  <th>Band</th>
+                  <th>17-week departure</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section id="diagnostic" class="pillar">
+        <div class="ph">
+          <span class="num">II</span>
+          <div>
+            <h2>Diagnostic</h2>
+            <p class="q">Why did it happen? · ऐसा क्यों हुआ?</p>
+          </div>
+          <div class="narr">
+            <div class="toonbox" id="toonG"></div>
+            <div class="bubble" id="bubG"></div>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <p class="lede rv" id="ledeG"></p>
+        <div class="spread even">
+          <div class="panel tilt rv">
+            <div class="ptitle">Anatomy of the departure <span>percentage points</span></div>
+            <div id="waterfall"></div>
+            <p class="note">
+              Season departure split into what global drivers explain (scaled by this region's sensitivity)
+              and local weather: low-pressure tracks, hills, cyclones.
+            </p>
+          </div>
+          <div class="panel tilt rv">
+            <div class="ptitle">Region × week <span>departure from normal, %</span></div>
+            <div id="heatmap" class="scrollx"></div>
+            <p class="note">The four IMD homogeneous regions. The glowing row is the state's own region.</p>
+          </div>
+        </div>
+        <div class="panel rv">
+          <div class="ptitle">
+            Does rain decide the harvest?
+            <span>rain departure vs main-crop yield change · bubble = kharif area</span>
+          </div>
+          <div id="scatter" class="scrollx"></div>
+          <p class="note" id="scatterNote"></p>
+        </div>
+      </section>
+
+      <section id="predictive" class="pillar">
+        <div class="ph">
+          <span class="num">III</span>
+          <div>
+            <h2>Predictive</h2>
+            <p class="q">What happens next? · आगे क्या होगा?</p>
+          </div>
+          <div class="narr">
+            <div class="toonbox" id="toonF"></div>
+            <div class="bubble" id="bubF"></div>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <p class="lede rv" id="ledeF"></p>
+        <div class="controls rv">
+          <label for="oct"
+            >October rain vs normal
+            <input type="range" id="oct" min="-50" max="50" step="5" value="0" /><output
+              id="octOut"
+              class="mono"
+              >±0%</output
+            ></label
+          >
+          <fieldset>
+            <legend>Pest pressure</legend>
+            <span class="seg">
+              <input type="radio" name="pest" id="pl" value="low" /><label for="pl">low</label>
+              <input type="radio" name="pest" id="pn" value="normal" checked /><label for="pn">normal</label>
+              <input type="radio" name="pest" id="ph" value="high" /><label for="ph">high</label></span
+            >
+          </fieldset>
+        </div>
+        <div class="spread">
+          <div class="panel tilt rv">
+            <div class="ptitle">Forecast <span id="fcUnit"></span></div>
+            <div class="fc" id="fc"></div>
+            <div class="model" id="model"></div>
+          </div>
+          <div class="panel tilt rv">
+            <div class="ptitle">
+              10,000 simulated harvests <span id="mcTime">main-crop output distribution</span>
+            </div>
+            <div id="hist"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="prescriptive" class="pillar">
+        <div class="ph">
+          <span class="num">IV</span>
+          <div>
+            <h2>Prescriptive</h2>
+            <p class="q">What should we do? · क्या करें?</p>
+          </div>
+          <div class="narr">
+            <div class="toonbox" id="toonP"></div>
+            <div class="bubble" id="bubP"></div>
+          </div>
+        </div>
+        <div class="rule"></div>
+        <p class="lede rv" id="ledeP"></p>
+        <div class="controls rv">
+          <label for="budget"
+            >Relief budget <input type="range" id="budget" min="25" max="2500" step="25" value="500" /><output
+              id="budgetOut"
+              class="mono"
+              >₹500 cr</output
+            ></label
+          >
+          <span class="mono" style="font-size: 12px; color: var(--muted)"
+            >Solved exactly: each action is funded until the next rupee would protect less than ₹1.</span
+          >
+        </div>
+        <div class="spread">
+          <div class="panel tilt rv">
+            <div class="ptitle">The orders <span>₹ crore</span></div>
+            <div class="tablewrap">
+              <table id="orders">
+                <thead>
+                  <tr>
+                    <th>Order</th>
+                    <th>Action</th>
+                    <th class="r">Allot</th>
+                    <th class="r">Protects</th>
+                    <th class="r">Return</th>
+                    <th>By</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="panel tilt rv">
+            <div class="ptitle">Farm income at risk <span>before and after the budget</span></div>
+            <div id="riskbars"></div>
+            <div class="ptitle">Calendar <span>keyed to the state's IMD band</span></div>
+            <ol id="cal"></ol>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <div class="ptitle">Under the hood <span>zero backend · everything runs in your browser</span></div>
+      <div class="stack">
+        <div><b>TypeScript engine</b>Pure, deterministic, DOM-free analytics core with 50+ unit tests</div>
+        <div><b>Seeded PRNG</b>Mulberry32 + Box–Muller: every number reproducible from a seed</div>
+        <div><b>OLS regression</b>Yield model fitted live on all 26 states, closed form</div>
+        <div><b>Monte Carlo</b>10,000 harvests per scenario in a module Web Worker, transferable buffers</div>
+        <div><b>Exact optimiser</b>Budget split by KKT conditions, bisection on the Lagrange multiplier</div>
+        <div><b>Fuzzy search</b>DP subsequence matcher behind the Ctrl+K palette</div>
+        <div><b>D3.js + Chart.js</b>Cartogram, waterfall, heatmap, scatter, histogram, tree-shaken</div>
+        <div><b>Canvas 2D</b>Parallax rain, procedural lightning, raindrop cursor trail</div>
+        <div><b>Web Audio API</b>Rain synthesised from filtered pink noise, no audio files</div>
+        <div><b>PWA</b>Service worker + manifest: installable, works offline</div>
+        <div><b>Observable store</b>One source of truth, unidirectional data flow</div>
+        <div><b>Vite + GitHub Actions</b>Lint, typecheck, test and deploy to Pages on every push</div>
+      </div>
+      <p class="fine">
+        All figures are synthetic and for demonstration. Departure bands follow IMD: large excess ≥ +60%,
+        excess +20 to +59%, normal −19 to +19%, deficient −20 to −59%, large deficient −60 to −99%. All-India
+        long-period average 868.6 mm (1971–2020). Farm-gate values are illustrative MSP-level prices.
+      </p>
+      <div class="build">
+        <span>Built by <b>Namit Tiwari</b></span
+        ><span>MIT licence</span
+        ><a href="https://github.com/YOUR_GITHUB_USERNAME/monsoon-bahi-khata" target="_blank" rel="noopener"
+          >View source on GitHub</a
+        ><span>build <b id="buildId"></b></span>
+      </div>
+    </footer>
+
+    <div class="overlay" id="palette" hidden>
+      <div class="palette" role="dialog" aria-modal="true" aria-label="Command palette">
+        <div class="palette-in">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M10 18a8 8 0 1 1 5.3-14A8 8 0 0 1 10 18Zm11 3-5.6-5.6" stroke-linecap="round" />
+          </svg>
+          <input
+            id="paletteInput"
+            type="text"
+            placeholder="Search states, sections and actions…"
+            autocomplete="off"
+            spellcheck="false"
+            role="combobox"
+            aria-expanded="true"
+            aria-controls="paletteList"
+            aria-autocomplete="list"
+          />
+        </div>
+        <ul id="paletteList" role="listbox" aria-label="Results"></ul>
+        <div class="palette-foot">
+          <span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>Enter</kbd> run</span
+          ><span><kbd>Esc</kbd> close</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="overlay" id="sheet" hidden>
+      <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+        <button class="close" id="sheetClose" type="button">Close</button>
+        <h2 id="sheetTitle">Keyboard</h2>
+        <dl>
+          <dt><kbd>Ctrl</kbd><kbd>K</kbd> <kbd>/</kbd></dt>
+          <dd>Command palette</dd>
+          <dt><kbd>1</kbd>–<kbd>4</kbd></dt>
+          <dd>Jump to a pillar</dd>
+          <dt><kbd>J</kbd> <kbd>K</kbd> <kbd>←</kbd> <kbd>→</kbd></dt>
+          <dd>Next or previous state</dd>
+          <dt><kbd>M</kbd></dt>
+          <dd>Rain sound on or off</dd>
+          <dt><kbd>D</kbd></dt>
+          <dd>Developer HUD</dd>
+          <dt><kbd>C</kbd></dt>
+          <dd>Copy a link to this state</dd>
+          <dt><kbd>R</kbd></dt>
+          <dd>Reset the scenario controls</dd>
+          <dt><kbd>T</kbd></dt>
+          <dd>Back to top</dd>
+          <dt><kbd>?</kbd></dt>
+          <dd>This sheet</dd>
+          <dt><kbd>↑↑↓↓←→←→</kbd><kbd>B</kbd><kbd>A</kbd></dt>
+          <dd>You know what this does</dd>
+        </dl>
+      </div>
+    </div>
+
+    <aside class="hud" id="hud" hidden aria-label="Developer HUD">
+      <div class="title"><span>dev hud</span><span class="hud-build"></span></div>
+      <canvas aria-hidden="true"></canvas>
+      <div class="rows"></div>
+    </aside>
+    <div class="toasts" id="toasts"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

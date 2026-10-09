@@ -1,0 +1,63 @@
+/* ---------- custom cursor ---------- */
+#fx {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9997;
+}
+.cur-dot,
+.cur-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.cur-dot {
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  background: var(--haldi);
+  box-shadow: 0 0 14px 3px rgba(255, 197, 61, 0.8);
+}
+.cur-ring {
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border: 1.5px solid var(--rain);
+  box-shadow:
+    0 0 18px rgba(70, 212, 224, 0.45),
+    inset 0 0 12px rgba(70, 212, 224, 0.25);
+  transition:
+    width 0.25s,
+    height 0.25s,
+    margin 0.25s,
+    background 0.25s,
+    border-color 0.25s,
+    opacity 0.3s;
+}
+.cur-ring.hot {
+  width: 64px;
+  height: 64px;
+  margin: -32px 0 0 -32px;
+  background: rgba(255, 197, 61, 0.12);
+  border-color: var(--haldi);
+}
+.cur-ring.down {
+  width: 26px;
+  height: 26px;
+  margin: -13px 0 0 -13px;
+}
+.has-cursor .cur-dot,
+.has-cursor .cur-ring {
+  opacity: 1;
+}
+.has-cursor,
+.has-cursor * {
+  cursor: none !important;
+}

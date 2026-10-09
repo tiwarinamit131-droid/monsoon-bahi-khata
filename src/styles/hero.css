@@ -1,0 +1,433 @@
+/* ---------- ticker ---------- */
+.ticker {
+  position: relative;
+  z-index: 5;
+  /* Fixed height: the ticker must not grow when the mono font swaps in, or the whole hero shifts. */
+  height: 34px;
+  background: rgba(8, 12, 34, 0.85);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  white-space: nowrap;
+}
+.ticker-track {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  gap: 30px;
+  padding: 0 16px;
+  animation: tick 80s linear infinite;
+}
+.ticker-track span {
+  color: var(--muted);
+}
+.ticker-track b {
+  color: var(--fg);
+  font-weight: 500;
+  margin-right: 6px;
+}
+@keyframes tick {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- hero ---------- */
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 620px;
+  border-bottom: 1px solid var(--line);
+}
+#sky {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.hero-in {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 24px;
+  align-items: center;
+  padding-block: 46px 120px;
+}
+.kicker {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--rain);
+  border: 1px solid var(--line);
+  background: var(--glass);
+  padding: 6px 14px;
+  border-radius: 30px;
+}
+.kicker i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--rain);
+  box-shadow: 0 0 10px var(--rain);
+  animation: pulse 1.6s infinite;
+}
+@keyframes pulse {
+  50% {
+    opacity: 0.3;
+  }
+}
+.deva-big {
+  font-family: var(--display);
+  font-size: clamp(44px, 6.4vw, 96px);
+  line-height: 1.05;
+  margin-top: 18px;
+  background: linear-gradient(
+    100deg,
+    var(--haldi) 0%,
+    #ff8a3d 30%,
+    var(--sindoor) 50%,
+    #ff8a3d 70%,
+    var(--haldi) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shine 6s linear infinite;
+  filter: drop-shadow(0 6px 30px rgba(255, 140, 60, 0.35));
+}
+@keyframes shine {
+  to {
+    background-position: 200% center;
+  }
+}
+.hero h1 {
+  font-size: clamp(34px, 5vw, 64px);
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.hero p.tag {
+  color: var(--muted);
+  font-size: clamp(16px, 1.5vw, 19px);
+  max-width: 46ch;
+  margin: 14px 0 0;
+}
+.hstats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 26px;
+}
+.hstat {
+  background: var(--glass);
+  border: 1px solid var(--line);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 12px 16px;
+  min-width: 140px;
+}
+.hstat b {
+  display: block;
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.hstat span {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+.btn {
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 40px;
+  padding: 12px 22px;
+  border: 1px solid var(--line);
+  background: var(--glass);
+  color: var(--fg);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
+}
+.btn.primary {
+  background: var(--haldi);
+  color: var(--haldi-ink);
+  border-color: var(--haldi);
+  box-shadow: 0 8px 30px rgba(255, 197, 61, 0.35);
+}
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 34px rgba(70, 212, 224, 0.25);
+}
+.btn[aria-pressed='true'] {
+  background: var(--rain);
+  color: #04131a;
+  border-color: var(--rain);
+}
+.eq {
+  display: inline-flex;
+  gap: 2px;
+  align-items: flex-end;
+  height: 14px;
+}
+.eq i {
+  width: 3px;
+  background: currentColor;
+  height: 30%;
+}
+.btn[aria-pressed='true'] .eq i {
+  animation: eq 0.8s ease-in-out infinite alternate;
+}
+.btn[aria-pressed='true'] .eq i:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.btn[aria-pressed='true'] .eq i:nth-child(3) {
+  animation-delay: 0.4s;
+}
+@keyframes eq {
+  from {
+    height: 20%;
+  }
+  to {
+    height: 100%;
+  }
+}
+
+.stage {
+  position: relative;
+  height: 470px;
+}
+.stage .megh-wrap {
+  position: absolute;
+  right: 4%;
+  top: 0;
+  width: min(300px, 70%);
+  animation: float 5s ease-in-out infinite;
+}
+.stage .mor-wrap {
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: min(330px, 78%);
+}
+.bubble {
+  position: absolute;
+  font-family: var(--toon);
+  font-size: 16px;
+  line-height: 1.35;
+  background: #fffdf5;
+  color: #1b2150;
+  padding: 12px 16px;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  max-width: 260px;
+  font-weight: 500;
+}
+.bubble::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #fffdf5;
+  transform: rotate(45deg);
+}
+.stage .bubble {
+  left: 0;
+  top: 40px;
+}
+.stage .bubble::after {
+  right: -7px;
+  top: 24px;
+}
+@keyframes float {
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+.toon {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.megh .drop {
+  animation: fall 1.2s linear infinite;
+}
+@keyframes fall {
+  0% {
+    transform: translateY(-6px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(42px);
+    opacity: 0;
+  }
+}
+.megh .sun {
+  transform-origin: 186px 40px;
+  animation: spin 14s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.megh .eyes {
+  animation: blink 4.5s infinite;
+  transform-origin: 117px 98px;
+}
+@keyframes blink {
+  0%,
+  92%,
+  100% {
+    transform: scaleY(1);
+  }
+  95% {
+    transform: scaleY(0.1);
+  }
+}
+.megh .sweat {
+  animation: sweat 2s ease-in infinite;
+}
+@keyframes sweat {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+}
+.peacock .tail {
+  transform-origin: 130px 196px;
+  transform: scale(0.32, 0.5);
+  transition: transform 1.2s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+.peacock.dance .tail {
+  transform: scale(1);
+  animation: shimmy 2.6s 1.2s ease-in-out infinite;
+}
+@keyframes shimmy {
+  0%,
+  100% {
+    transform: scale(1) rotate(0);
+  }
+  25% {
+    transform: scale(1.02) rotate(-2.5deg);
+  }
+  75% {
+    transform: scale(1.02) rotate(2.5deg);
+  }
+}
+.peacock .head {
+  transform-origin: 132px 110px;
+  animation: peck 3.2s ease-in-out infinite;
+}
+@keyframes peck {
+  50% {
+    transform: rotate(-6deg);
+  }
+}
+.farmer.happy {
+  animation: bob 1.6s ease-in-out infinite;
+}
+@keyframes bob {
+  50% {
+    transform: translateY(-6px) rotate(-1deg);
+  }
+}
+.munim .book {
+  transform-origin: 110px 212px;
+  animation: tap 3s ease-in-out infinite;
+}
+@keyframes tap {
+  50% {
+    transform: rotate(-3deg) translateY(-3px);
+  }
+}
+
+.waves {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 110px;
+  pointer-events: none;
+}
+.waves svg.wave {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 100%;
+}
+.waves .w1 {
+  animation: drift 14s linear infinite;
+  opacity: 0.55;
+}
+.waves .w2 {
+  animation: drift 9s linear infinite reverse;
+  opacity: 0.85;
+}
+@keyframes drift {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.boat {
+  position: absolute;
+  width: 56px;
+  bottom: 46px;
+  animation:
+    sail 22s linear infinite,
+    rock 2.4s ease-in-out infinite;
+}
+@keyframes sail {
+  from {
+    left: -8%;
+  }
+  to {
+    left: 104%;
+  }
+}
+@keyframes rock {
+  50% {
+    transform: translateY(-6px) rotate(6deg);
+  }
+}
+.boat-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.stage .bubble {
+  z-index: 2;
+  max-width: min(250px, 58%);
+}

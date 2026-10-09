@@ -1,0 +1,50 @@
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
+  background: var(--bg);
+  background-image:
+    radial-gradient(1200px 700px at 80% -10%, rgba(79, 140, 255, 0.22), transparent 60%),
+    radial-gradient(900px 600px at -10% 30%, rgba(25, 195, 155, 0.13), transparent 60%),
+    radial-gradient(1000px 800px at 110% 90%, rgba(255, 90, 60, 0.1), transparent 60%),
+    linear-gradient(180deg, #060a1c, #0b1332 40%, #070b1f);
+  background-attachment: fixed;
+  overflow-x: hidden;
+}
+.wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-inline: 16px;
+}
+h1,
+h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  margin: 0;
+  text-wrap: balance;
+}
+a {
+  color: inherit;
+}
+:focus-visible {
+  outline: 2px solid var(--haldi);
+  outline-offset: 3px;
+}
+.mono {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+.pos {
+  color: var(--rain);
+}
+.neg {
+  color: var(--sindoor);
+}

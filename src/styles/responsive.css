@@ -1,0 +1,91 @@
+@media (max-width: 1000px) {
+  .hero-in {
+    grid-template-columns: minmax(0, 1fr);
+    padding-block: 34px 120px;
+  }
+  .stage {
+    height: 380px;
+  }
+  .kpis {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .spread,
+  .spread.even {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ph {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+  .narr {
+    grid-column: 1/-1;
+    max-width: none;
+  }
+  .pick {
+    margin-left: 0;
+  }
+  .gauge,
+  .gauge-lab {
+    display: none;
+  }
+}
+@media (max-width: 560px) {
+  .kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .rail a .hi {
+    display: none;
+  }
+  .rail a {
+    padding: 6px 8px;
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+  }
+  .fcwrap,
+  .presc-top {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .fcwrap .toonbox,
+  .presc-top .toonbox {
+    width: 110px;
+  }
+  #cal li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
+  }
+  .stage .bubble {
+    max-width: 200px;
+    font-size: 14px;
+  }
+  .narr .toonbox {
+    width: 96px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .ticker {
+    overflow-x: auto;
+  }
+  .pre {
+    opacity: 1;
+    transform: none;
+  }
+  .peacock.dance .tail {
+    transform: scale(1);
+  }
+}
+@media (max-width: 700px) {
+  .devbar {
+    position: static;
+    justify-content: flex-start;
+    padding: 12px 16px 0;
+  }
+  .hud {
+    width: auto;
+    right: 16px;
+  }
+}
